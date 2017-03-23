@@ -3,8 +3,27 @@ services:
 
   foo:
     image: dockercloud/hello-world
-    ports: ["9090:80"]
+    ports:
+      - "9090:80"
+    networks:
+      - http-failover-network
 
   bar:
     image: dockercloud/hello-world
-    ports: ["9091:80"]
+    ports:
+    - "9091:80"
+    networks:
+      - http-failover-network
+
+  tinyproxy:
+    image: dannydirect/tinyproxy:latest
+    container_name: tinyproxy
+    ports:
+      - "8888:8888"
+    entrypoint: ["/opt/docker-tinyproxy/run.sh", "ANY"]
+    networks:
+      - http-failover-network
+
+networks:
+  http-failover-network:
+    driver: bridge
