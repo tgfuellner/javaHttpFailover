@@ -1,0 +1,10 @@
+version: '2'
+services:
+
+  foo:
+    image: dockercloud/hello-world
+    ports: ["9090:80"]
+
+  bar:
+    image: dockercloud/hello-world
+    ports: ["9091:80"]
